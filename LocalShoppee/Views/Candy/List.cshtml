@@ -1,0 +1,18 @@
+﻿@model LocalShoppee.ViewModels.CandyListViewModel
+
+<html>
+<head>
+    <meta />
+</head>
+<body>
+    <h1>@Model.CurrentCategory</h1>
+    @foreach(var candy in Model.Candies)
+    {
+    <div>
+        <h2>@candy.Name</h2>
+        <h2>@candy.Price.ToString("c")</h2>
+        <h2>@candy.Category.CategoryName</h2>
+    </div>
+    }
+</body>
+</html>
