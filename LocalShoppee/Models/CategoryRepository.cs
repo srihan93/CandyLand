@@ -7,11 +7,13 @@ namespace LocalShoppee.Models
 {
     public class CategoryRepository : ICategoryRepository
     {
-        public IEnumerable<Category> GetAllCategories => new List<Category>
+        private readonly AppDbContext _appDbContext;
+
+        public CategoryRepository(AppDbContext appDbContext)
         {
-            new Category{CategoryId=1,CategoryName="Hard Candy",CategoryDescription="Awesome Candy"},
-            new Category{CategoryId=2,CategoryName="Choco Candy",CategoryDescription="Awesome Choco Candy"},
-            new Category{CategoryId=3,CategoryName="Fruit Candy",CategoryDescription="Awesome Fruit Candy"}
-        };
+            _appDbContext = appDbContext;
+        }
+
+        public IEnumerable<Category> GetAllCategories => _appDbContext.Categories;
     }
 }
