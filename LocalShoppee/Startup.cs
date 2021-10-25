@@ -33,6 +33,7 @@ namespace LocalShoppee
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICandyRepository, CandyRepository>();
             services.AddScoped<ShoppingCart>(sc => ShoppingCart.GetCart(sc));
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddHttpContextAccessor();
             services.AddSession();

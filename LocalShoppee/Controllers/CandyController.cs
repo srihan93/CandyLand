@@ -1,6 +1,8 @@
 ﻿using LocalShoppee.Models;
 using LocalShoppee.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LocalShoppee.Controllers
 {
@@ -15,16 +17,34 @@ namespace LocalShoppee.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public IActionResult List()
+        public ViewResult List(string category)
         {
+            IEnumerable<Candy> candies;
+            string currentCategory;
+
+            if (string.IsNullOrEmpty(category))
+            {
+                candies = _candyRepository.GetAllCandy.OrderBy(c => c.CandyId);
+                currentCategory = "All Candy";
+            }
+            else
+            {
+                candies = _candyRepository.GetAllCandy.Where(c => c.Category.CategoryName == category);
+                currentCategory = _categoryRepository.GetAllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
+            }
+            var candyListViewModel = new CandyListViewModel();
+            candyListViewModel.Candies = candies;
+            candyListViewModel.CurrentCategory = currentCategory;
+            return View(candyListViewModel);
+
             // ViewBag.CurrentCategory = "Bestsellers";
             //return View(_candyRepository.GetAllCandy);
-            var candyListViewModel = new CandyListViewModel();
-            candyListViewModel.Candies = _candyRepository.GetAllCandy;
-            candyListViewModel.CurrentCategory = "BestSellers";
-            return View(candyListViewModel);
-        }
 
+            //var candyListViewModel = new CandyListViewModel();
+            //candyListViewModel.Candies = _candyRepository.GetAllCandy;
+            //candyListViewModel.CurrentCategory = "BestSellers";
+            //return View(candyListViewModel);
+        }
 
         public IActionResult Details(int id)
         {
