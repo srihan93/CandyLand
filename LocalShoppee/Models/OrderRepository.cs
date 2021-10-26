@@ -33,7 +33,10 @@ namespace LocalShoppee.Models
                     CandyId = shoppingCartItem.Candy.CandyId,
                     OrderId = order.OrderId
                 };
+                _appDbContext.OrderDetails.Add(orderDetail);
             }
+
+            _appDbContext.SaveChanges();
         }
     }
 }
