@@ -30,6 +30,17 @@ namespace LocalShoppee.Controllers
             return View(shoppingCartViewModel);
         }
 
+        //public RedirectToActionResult AddToShoppingCart(int candyId)
+        //{
+        //    var selectedCandy = _candyRepository.GetAllCandy.FirstOrDefault(c => c.CandyId == candyId);
+        //    if (selectedCandy != null)
+        //    {
+        //        _shoppingCart.AddToCart(selectedCandy, 1);
+        //    }
+
+        //    return RedirectToAction("Index");
+        //}
+
         public RedirectToActionResult AddToShoppingCart(int candyId)
         {
             var selectedCandy = _candyRepository.GetAllCandy.FirstOrDefault(c => c.CandyId == candyId);
@@ -37,8 +48,8 @@ namespace LocalShoppee.Controllers
             {
                 _shoppingCart.AddToCart(selectedCandy, 1);
             }
-
-            return RedirectToAction("Index");
+            var candy = _candyRepository.GetAllCandy.FirstOrDefault(c => c.CandyId == candyId);
+            return RedirectToAction("Details", "Candy", new { id = candyId });
         }
 
         public RedirectToActionResult RemoveFromShoppingCart(int candyId)
